@@ -125,6 +125,45 @@ resources/
 - Tests run with edition set to `pro` in `TestCase::defineEnvironment()` so all Pro features are exercised
 - When adding a new Pro-only feature: add its class to the appropriate constant, gate its registration, and add abort guard if it has a controller
 
+## Changelog Conventions
+
+- Source of truth for Marketplace: **GitHub Releases** (attached to git tags)
+- Local file: `CHANGELOG.md` in project root — used as source for GitHub Release notes
+- Newest version at the top
+- Version heading: `## VERSION (YYYY-MM-DD)` — e.g., `## 1.2.0 (2026-03-01)`
+- Use `(Unreleased)` instead of date for the current dev version
+- Entry format uses Statamic Marketplace badges:
+  - `- [new] Description` — new feature (renders a "new" badge on Marketplace)
+  - `- [fix] Description` — bug fix (renders a "fixed" badge on Marketplace)
+- Tag style: `1.0.0` (no `v` prefix) — as recommended by Statamic
+- Follow [SemVer](https://semver.org/): MAJOR (breaking), MINOR (features), PATCH (fixes)
+- Do NOT add changelog entries automatically — only when the user explicitly asks
+
+### Release Procedure (when user says "release X.Y.Z")
+
+Run this procedure step by step, confirming before destructive/public actions:
+
+1. **Pre-checks**:
+   - Ensure working tree is clean (`git status`)
+   - Ensure all tests pass (`vendor/bin/phpunit`)
+   - Ensure code style is clean (`vendor/bin/pint --test`)
+   - Verify `CHANGELOG.md` has an `(Unreleased)` section with entries
+2. **Update CHANGELOG.md**:
+   - Replace `(Unreleased)` with the actual date: `## X.Y.Z (YYYY-MM-DD)`
+   - Add a new empty section at the top: `## Unreleased`
+3. **Commit the changelog update**:
+   - `git add CHANGELOG.md && git commit -m "chore: prepare release X.Y.Z"`
+4. **Create git tag** (no `v` prefix):
+   - `git tag X.Y.Z`
+5. **Push commit and tag** (ask user to confirm remote/branch):
+   - `git push origin <branch> && git push origin X.Y.Z`
+6. **Create GitHub Release**:
+   - Extract release notes from CHANGELOG.md (the entries under `## X.Y.Z`)
+   - `gh release create X.Y.Z --title "X.Y.Z" --notes "<release notes>"`
+7. **Verify**: `gh release view X.Y.Z`
+
+If any step fails — stop and report. Do NOT skip steps or continue past failures.
+
 ## Translations (i18n)
 
 - Namespace: `statamic-lead-insights` (loaded automatically by `AddonServiceProvider::bootTranslations()` from `lang/`)
