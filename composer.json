@@ -1,5 +1,35 @@
 {
     "name": "isapp/statamic-lead-insights",
+    "description": "Know where your leads come from. Captures UTM parameters, referrers, and landing pages — attaches them to Statamic form submissions.",
+    "type": "statamic-addon",
+    "license": "proprietary",
+    "keywords": [
+        "statamic",
+        "utm",
+        "attribution",
+        "lead",
+        "analytics",
+        "marketing",
+        "forms"
+    ],
+    "authors": [
+        {
+            "name": "ISAPP",
+            "homepage": "https://isapp.be"
+        }
+    ],
+    "homepage": "https://github.com/isap-ou/statamic-lead-insights",
+    "support": {
+        "issues": "https://github.com/isap-ou/statamic-lead-insights/issues"
+    },
+    "require": {
+        "php": "^8.2",
+        "statamic/cms": "^6.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^10.8",
+        "laravel/pint": "^1"
+    },
     "autoload": {
         "psr-4": {
             "Isapp\\LeadInsights\\": "src"
@@ -10,13 +40,6 @@
             "Isapp\\LeadInsights\\Tests\\": "tests"
         }
     },
-    "require": {
-        "statamic/cms": "^6.0"
-    },
-    "require-dev": {
-        "orchestra/testbench": "^10.8",
-        "laravel/pint": "^1"
-    },
     "config": {
         "allow-plugins": {
             "pixelfear/composer-dist-plugin": true
@@ -25,7 +48,7 @@
     "extra": {
         "statamic": {
             "name": "Lead Insights",
-            "description": "Lead Insights addon",
+            "description": "Know where your leads come from. UTM capture, referrer tracking, and attribution for Statamic forms.",
             "editions": ["free", "pro"]
         },
         "laravel": {
