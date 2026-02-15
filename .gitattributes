@@ -4,7 +4,6 @@ pint.json               export-ignore
 .github               export-ignore
 tests               export-ignore
 vite.config.js               export-ignore
-PLAN.md               export-ignore
 DEVELOPMENT.md               export-ignore
 AGENTS.md               export-ignore
 CLAUDE.md               export-ignore

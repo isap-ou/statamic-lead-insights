@@ -16,5 +16,6 @@ All notable changes to Lead Insights will be documented in this file.
 - [new] CSV export of aggregated widget tables (Pro)
 - [new] First-touch + last-touch attribution (Pro)
 - [new] Retention pruning command `lead-insights:prune` (Pro)
+- [new] Scheduled automatic pruning with configurable frequency and time (Pro)
 - [new] Settings UI via CP addon settings screen
 - [new] Translations: English, German, Dutch
