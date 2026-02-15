@@ -89,7 +89,16 @@ All settings are managed in the Control Panel under **Addons → Lead Insights**
 
 ## Widgets
 
-Add widgets to your Control Panel dashboard via **CP → Dashboard → Widgets**.
+Widgets are registered automatically but need to be added to your dashboard. Add them in `config/statamic/cp.php`:
+
+```php
+'widgets' => [
+    ['type' => 'leads_by_source', 'width' => 50],
+    ['type' => 'leads_by_campaign', 'width' => 50],
+    ['type' => 'leads_by_form', 'width' => 50],
+    ['type' => 'form_source_breakdown', 'width' => 50, 'form' => 'contact'],
+],
+```
 
 ### Leads by Source (Free)
 

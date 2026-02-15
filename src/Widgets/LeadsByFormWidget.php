@@ -30,6 +30,7 @@ class LeadsByFormWidget extends Widget
             'rows' => $rows,
             'total' => $submissions->count(),
             'days' => $settings->defaultDateRangeDays,
+            'exportType' => 'form',
         ]);
     }
 }

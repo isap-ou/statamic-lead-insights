@@ -54,6 +54,7 @@ return [
     'widgets.no_config' => 'Please select a form in widget settings.',
     'widgets.last_n_days' => 'Last :days days',
     'widgets.no_data' => 'No data available for this period.',
+    'widgets.export_csv' => 'Export CSV',
     'widgets.label' => 'Label',
     'widgets.leads' => 'Leads',
     'widgets.share' => 'Share',

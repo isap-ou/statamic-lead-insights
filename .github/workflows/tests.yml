@@ -31,6 +31,14 @@ jobs:
       - name: Install dependencies
         run: composer install --no-interaction --prefer-dist
 
+      - name: Check for debug leftovers
+        run: |
+          PATTERNS='(\b(dd|dump|var_dump|ray|xdebug_break)\s*\()'
+          if grep -rPn "$PATTERNS" src/; then
+            echo "::error::Debug statements found in src/"
+            exit 1
+          fi
+
       - name: Run Pint
         run: vendor/bin/pint --test
 

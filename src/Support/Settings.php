@@ -15,6 +15,7 @@ use Statamic\Facades\Addon;
 class Settings
 {
     public function __construct(
+        public readonly bool $isPro = false,
         public readonly bool $enabled = true,
         public readonly string $attributionKey = '__attribution',
         public readonly string $cookieName = 'lead_insights_attribution',
@@ -34,17 +35,19 @@ class Settings
      */
     public static function fromAddon(): static
     {
-        $values = Addon::get('isapp/statamic-lead-insights')?->settings()?->all() ?? [];
+        $addon = Addon::get('isapp/statamic-lead-insights');
+        $values = $addon?->settings()?->all() ?? [];
 
-        return static::fromArray($values);
+        return static::fromArray($values, isPro: $addon?->edition() === 'pro');
     }
 
     /**
      * Create an instance from an associative array.
      */
-    public static function fromArray(array $values): static
+    public static function fromArray(array $values, bool $isPro = false): static
     {
         return new static(
+            isPro: $isPro,
             enabled: (bool) ($values['enabled'] ?? true),
             attributionKey: (string) ($values['attribution_key'] ?? '__attribution'),
             cookieName: (string) ($values['cookie_name'] ?? 'lead_insights_attribution'),

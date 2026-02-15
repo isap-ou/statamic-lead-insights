@@ -46,6 +46,8 @@ class FormSourceWidget extends Widget
             'rows' => $rows,
             'total' => $submissions->count(),
             'days' => $settings->defaultDateRangeDays,
+            'exportType' => 'form_source',
+            'exportForm' => $formHandle,
         ]);
     }
 }

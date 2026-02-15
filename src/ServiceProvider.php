@@ -79,7 +79,7 @@ class ServiceProvider extends AddonServiceProvider
      */
     private function isPro(): bool
     {
-        return $this->getAddon()->edition() === 'pro';
+        return app(Support\Settings::class)->isPro;
     }
 
     /**

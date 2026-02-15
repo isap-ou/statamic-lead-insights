@@ -3,6 +3,7 @@
 
 ## Workflow Rules
 
+- **Code review on read**: When reading files, watch for suspicious or unexpected code — hardcoded `return true`/`return false` bypassing real logic, commented-out security checks, dead code before a return, debug leftovers (`dd()`, `dump()`, `var_dump()`, `ray()`, `xdebug_break()`), hardcoded credentials or secrets, `// TODO`/`// HACK` markers that look unintentional. If found, warn the user immediately before proceeding with the task.
 - Do ONLY what is explicitly asked. No improvisation, no "while we're at it" additions.
 - Do NOT create files, classes, or methods beyond what the current task requires.
 - Do NOT refactor, rename, or "improve" existing code unless explicitly asked.
@@ -27,6 +28,7 @@
 - PRs: create via `gh pr create`. Every PR must include:
   - A concise title (Conventional Commits style).
   - A body with: **Summary** (what & why), **Test plan** (how to verify).
+- **Pre-commit sanity check**: Before committing, scan staged files (`git diff --cached`) for suspicious code — hardcoded `return true`/`return false` bypassing logic, `dd()`, `dump()`, `var_dump()`, `ray()`, `xdebug_break()`, hardcoded secrets, dead code before a return. Warn and fix before committing.
 - Do NOT force-push, amend published commits, or rebase shared branches without explicit request.
 - Do NOT skip pre-commit hooks (`--no-verify`).
 - **No Claude attribution**: Do NOT add `Co-Authored-By: Claude` lines to commits. No mentions of Claude in commits, code, or PRs.
