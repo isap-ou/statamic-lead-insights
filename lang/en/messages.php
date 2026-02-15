@@ -41,6 +41,15 @@ return [
     // Settings — Retention
     'settings.retention_days' => 'Retention Days',
     'settings.retention_days_instructions' => 'Number of days to keep attribution data before pruning. Used by the lead-insights:prune command. (Pro)',
+    'settings.prune_schedule_enabled' => 'Enable Automatic Pruning',
+    'settings.prune_schedule_enabled_instructions' => 'Automatically run the prune command on a schedule. (Pro)',
+    'settings.prune_schedule_frequency' => 'Prune Frequency',
+    'settings.prune_schedule_frequency_instructions' => 'How often the automatic pruning should run.',
+    'settings.prune_schedule_time' => 'Prune Time',
+    'settings.prune_schedule_time_instructions' => 'Time of day to run the prune command (HH:MM, 24-hour format).',
+    'settings.prune_frequency_daily' => 'Daily',
+    'settings.prune_frequency_weekly' => 'Weekly',
+    'settings.prune_frequency_monthly' => 'Monthly',
 
     // Permissions
     'permissions.view' => 'View Lead Insights',

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Isapp\LeadInsights;
 
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\Facades\Route;
 use Statamic\Events\SubmissionCreating;
 use Statamic\Facades\Permission;
@@ -72,6 +73,28 @@ class ServiceProvider extends AddonServiceProvider
         $this->registerSettings();
         $this->registerPermissions();
         $this->registerRoutes();
+    }
+
+    /**
+     * Schedule automatic pruning of attribution data (Pro-only).
+     */
+    protected function schedule(Schedule $schedule): void
+    {
+        $settings = $this->app->make(Support\Settings::class);
+
+        if (! $settings->isPro || ! $settings->pruneScheduleEnabled) {
+            return;
+        }
+
+        $command = $schedule->command(Commands\PruneCommand::class);
+
+        match ($settings->pruneScheduleFrequency) {
+            'weekly' => $command->weekly(),
+            'monthly' => $command->monthly(),
+            default => $command->daily(),
+        };
+
+        $command->at($settings->pruneScheduleTime);
     }
 
     /**
@@ -292,25 +315,73 @@ class ServiceProvider extends AddonServiceProvider
                         ],
                     ],
                 ],
-                'retention' => [
-                    'display' => __('statamic-lead-insights::messages.settings.tab_retention'),
-                    'sections' => [
-                        [
-                            'fields' => [
-                                [
-                                    'handle' => 'retention_days',
-                                    'field' => [
-                                        'type' => 'integer',
-                                        'display' => __('statamic-lead-insights::messages.settings.retention_days'),
-                                        'instructions' => __('statamic-lead-insights::messages.settings.retention_days_instructions'),
-                                        'default' => 365,
+                ...$this->retentionTab(),
+            ],
+        ]);
+    }
+
+    /**
+     * Build the Retention tab fields, conditionally including Pro-only schedule fields.
+     *
+     * @return array<string, array<string, mixed>>
+     */
+    private function retentionTab(): array
+    {
+        if (! $this->isPro()) {
+            return [];
+        }
+
+        return [
+            'retention' => [
+                'display' => __('statamic-lead-insights::messages.settings.tab_retention'),
+                'sections' => [
+                    [
+                        'fields' => [
+                            [
+                                'handle' => 'retention_days',
+                                'field' => [
+                                    'type' => 'integer',
+                                    'display' => __('statamic-lead-insights::messages.settings.retention_days'),
+                                    'instructions' => __('statamic-lead-insights::messages.settings.retention_days_instructions'),
+                                    'default' => 365,
+                                ],
+                            ],
+                            [
+                                'handle' => 'prune_schedule_enabled',
+                                'field' => [
+                                    'type' => 'toggle',
+                                    'display' => __('statamic-lead-insights::messages.settings.prune_schedule_enabled'),
+                                    'instructions' => __('statamic-lead-insights::messages.settings.prune_schedule_enabled_instructions'),
+                                    'default' => false,
+                                ],
+                            ],
+                            [
+                                'handle' => 'prune_schedule_frequency',
+                                'field' => [
+                                    'type' => 'select',
+                                    'display' => __('statamic-lead-insights::messages.settings.prune_schedule_frequency'),
+                                    'instructions' => __('statamic-lead-insights::messages.settings.prune_schedule_frequency_instructions'),
+                                    'default' => 'daily',
+                                    'options' => [
+                                        'daily' => __('statamic-lead-insights::messages.settings.prune_frequency_daily'),
+                                        'weekly' => __('statamic-lead-insights::messages.settings.prune_frequency_weekly'),
+                                        'monthly' => __('statamic-lead-insights::messages.settings.prune_frequency_monthly'),
                                     ],
+                                ],
+                            ],
+                            [
+                                'handle' => 'prune_schedule_time',
+                                'field' => [
+                                    'type' => 'text',
+                                    'display' => __('statamic-lead-insights::messages.settings.prune_schedule_time'),
+                                    'instructions' => __('statamic-lead-insights::messages.settings.prune_schedule_time_instructions'),
+                                    'default' => '02:00',
                                 ],
                             ],
                         ],
                     ],
                 ],
             ],
-        ]);
+        ];
     }
 }

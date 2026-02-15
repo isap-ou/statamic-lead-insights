@@ -86,6 +86,9 @@ All settings are managed in the Control Panel under **Addons → Lead Insights**
 | Setting | Default | Description |
 |---|---|---|
 | `retention_days` | `365` | Days to keep attribution data before pruning |
+| `prune_schedule_enabled` | `false` | Enable automatic scheduled pruning |
+| `prune_schedule_frequency` | `daily` | How often to prune: daily, weekly, or monthly |
+| `prune_schedule_time` | `02:00` | Time of day to run (HH:MM, 24-hour format) |
 
 ## Widgets
 
@@ -151,7 +154,11 @@ Override the retention period per run:
 php artisan lead-insights:prune --days=90
 ```
 
-Schedule it in your `routes/console.php` for automated cleanup.
+### Automatic scheduling
+
+Enable automatic pruning in **Addons → Lead Insights → Retention**. Choose a frequency (daily, weekly, or monthly) and a time of day. The addon registers the schedule automatically — no changes to `routes/console.php` needed.
+
+Make sure `php artisan schedule:run` is set up in your server's crontab.
 
 ## Privacy & GDPR
 
