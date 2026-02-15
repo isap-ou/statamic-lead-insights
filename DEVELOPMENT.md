@@ -209,11 +209,12 @@ Keyed by:
 Implement:
 - Config: `retention_days` (default 365)
 - Command: `php artisan lead-insights:prune --days=365`
-- Prune behavior (choose one, document clearly):
-  A) Remove only `__attribution` payload from old submissions (preferred, preserves business records), or
-  B) Delete old submissions entirely (configurable, but off by default)
-
-Default recommendation: **strip attribution payload only**.
+- Prune behavior: remove only `__attribution` payload from old submissions (preserves business records)
+- Scheduled pruning via `AddonServiceProvider::schedule()` hook:
+  - `prune_schedule_enabled` (toggle, default false) — enable automatic pruning
+  - `prune_schedule_frequency` (select: daily/weekly/monthly, default daily)
+  - `prune_schedule_time` (text, HH:MM 24h, default 02:00)
+  - Gated by Pro edition AND enabled toggle — no host app changes needed
 
 ---
 
@@ -233,6 +234,9 @@ Settings keys:
 - `store_landing_without_consent` (toggle, default true)
 - `store_referrer_without_consent` (toggle, default false)
 - `retention_days` (integer, default 365) *(Pro)*
+- `prune_schedule_enabled` (toggle, default false) *(Pro)*
+- `prune_schedule_frequency` (select: daily/weekly/monthly, default daily) *(Pro)*
+- `prune_schedule_time` (text, default 02:00) *(Pro)*
 - `top_n` (integer, default 10)
 - `default_date_range_days` (integer, default 30)
 
