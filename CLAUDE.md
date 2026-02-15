@@ -136,9 +136,11 @@ resources/
 - Newest version at the top
 - Version heading: `## VERSION (YYYY-MM-DD)` — e.g., `## 1.2.0 (2026-03-01)`
 - Use `(Unreleased)` instead of date for the current dev version
-- Entry format uses Statamic Marketplace badges:
-  - `- [new] Description` — new feature (renders a "new" badge on Marketplace)
-  - `- [fix] Description` — bug fix (renders a "fixed" badge on Marketplace)
+- Entry format uses Statamic Marketplace badges with emoji prefix:
+  - `- [new] ✨ Description` — new feature
+  - `- [fix] 🐛 Description` — bug fix
+  - `- [break] 💥 Description` — breaking change
+  - `- 🔧 Description` — chore/refactor (no Marketplace badge)
 - Tag style: `1.0.0` (no `v` prefix) — as recommended by Statamic
 - Follow [SemVer](https://semver.org/): MAJOR (breaking), MINOR (features), PATCH (fixes)
 - Do NOT add changelog entries automatically — only when the user explicitly asks
