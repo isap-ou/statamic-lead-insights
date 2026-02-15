@@ -1,0 +1,39 @@
+{
+    "name": "isapp/statamic-lead-insights",
+    "autoload": {
+        "psr-4": {
+            "Isapp\\LeadInsights\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Isapp\\LeadInsights\\Tests\\": "tests"
+        }
+    },
+    "require": {
+        "statamic/cms": "^6.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^10.8",
+        "laravel/pint": "^1"
+    },
+    "config": {
+        "allow-plugins": {
+            "pixelfear/composer-dist-plugin": true
+        }
+    },
+    "extra": {
+        "statamic": {
+            "name": "Lead Insights",
+            "description": "Lead Insights addon",
+            "editions": ["free", "pro"]
+        },
+        "laravel": {
+            "providers": [
+                "Isapp\\LeadInsights\\ServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
