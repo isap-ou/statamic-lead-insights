@@ -28,6 +28,9 @@ class Settings
         public readonly int $topN = 10,
         public readonly int $defaultDateRangeDays = 30,
         public readonly int $retentionDays = 365,
+        public readonly bool $pruneScheduleEnabled = false,
+        public readonly string $pruneScheduleFrequency = 'daily',
+        public readonly string $pruneScheduleTime = '02:00',
     ) {}
 
     /**
@@ -60,6 +63,9 @@ class Settings
             topN: (int) ($values['top_n'] ?? 10),
             defaultDateRangeDays: (int) ($values['default_date_range_days'] ?? 30),
             retentionDays: (int) ($values['retention_days'] ?? 365),
+            pruneScheduleEnabled: (bool) ($values['prune_schedule_enabled'] ?? false),
+            pruneScheduleFrequency: (string) ($values['prune_schedule_frequency'] ?? 'daily'),
+            pruneScheduleTime: (string) ($values['prune_schedule_time'] ?? '02:00'),
         );
     }
 }

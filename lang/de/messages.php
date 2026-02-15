@@ -41,6 +41,15 @@ return [
     // Settings — Retention
     'settings.retention_days' => 'Aufbewahrungsdauer (Tage)',
     'settings.retention_days_instructions' => 'Anzahl der Tage, die Attributionsdaten vor dem Bereinigen aufbewahrt werden. Wird vom Befehl lead-insights:prune verwendet. (Pro)',
+    'settings.prune_schedule_enabled' => 'Automatisches Bereinigen aktivieren',
+    'settings.prune_schedule_enabled_instructions' => 'Den Bereinigungs-Befehl automatisch nach Zeitplan ausführen. (Pro)',
+    'settings.prune_schedule_frequency' => 'Bereinigungshäufigkeit',
+    'settings.prune_schedule_frequency_instructions' => 'Wie oft die automatische Bereinigung ausgeführt werden soll.',
+    'settings.prune_schedule_time' => 'Bereinigungszeit',
+    'settings.prune_schedule_time_instructions' => 'Tageszeit für die Bereinigung (HH:MM, 24-Stunden-Format).',
+    'settings.prune_frequency_daily' => 'Täglich',
+    'settings.prune_frequency_weekly' => 'Wöchentlich',
+    'settings.prune_frequency_monthly' => 'Monatlich',
 
     // Permissions
     'permissions.view' => 'Lead Insights anzeigen',

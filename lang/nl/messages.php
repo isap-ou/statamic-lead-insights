@@ -41,6 +41,15 @@ return [
     // Settings — Retention
     'settings.retention_days' => 'Bewaartermijn (dagen)',
     'settings.retention_days_instructions' => 'Aantal dagen dat attributiegegevens bewaard worden voordat ze worden opgeschoond. Gebruikt door het commando lead-insights:prune. (Pro)',
+    'settings.prune_schedule_enabled' => 'Automatisch opschonen inschakelen',
+    'settings.prune_schedule_enabled_instructions' => 'Het opschooncommando automatisch volgens schema uitvoeren. (Pro)',
+    'settings.prune_schedule_frequency' => 'Opschoonfrequentie',
+    'settings.prune_schedule_frequency_instructions' => 'Hoe vaak het automatisch opschonen moet worden uitgevoerd.',
+    'settings.prune_schedule_time' => 'Opschoontijd',
+    'settings.prune_schedule_time_instructions' => 'Tijdstip voor het opschooncommando (UU:MM, 24-uursnotatie).',
+    'settings.prune_frequency_daily' => 'Dagelijks',
+    'settings.prune_frequency_weekly' => 'Wekelijks',
+    'settings.prune_frequency_monthly' => 'Maandelijks',
 
     // Permissions
     'permissions.view' => 'Lead Insights bekijken',

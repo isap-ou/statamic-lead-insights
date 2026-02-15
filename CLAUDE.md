@@ -12,7 +12,7 @@
 - Add comments to all classes, methods, and non-trivial logic blocks.
 - Follow DEVELOPMENT.md as the source of truth for requirements.
 - Implement step by step, one task at a time, waiting for the next instruction.
-- When requirements change or new ones appear, update the relevant MD files (DEVELOPMENT.md, PLAN.md, CLAUDE.md) to keep them in sync.
+- When requirements change or new ones appear, update the relevant MD files (DEVELOPMENT.md, CLAUDE.md, README.md) to keep them in sync.
 
 ## Git / Commits / PR Rules
 
@@ -122,6 +122,8 @@ resources/
 - Gating happens at the **registration level** in `ServiceProvider.php` — Pro features don't register on Free
 - Pro-only widgets listed in `ServiceProvider::PRO_WIDGETS` constant; filtered in `bootWidgets()` override
 - Pro-only commands listed in `ServiceProvider::PRO_COMMANDS` constant; filtered in `bootCommands()` override
+- Pro-only settings tabs (Retention) are conditionally built via `isPro()` check — entire tab is omitted on Free
+- Pro-only scheduled tasks use `AddonServiceProvider::schedule()` hook, gated by `isPro()` + setting toggle
 - Pro-only routes and permissions are conditionally registered in `bootAddon()` via `isPro()` check
 - Controllers for Pro features include a defense-in-depth `abort_unless(edition === 'pro', 403)` check
 - Tests run with edition set to `pro` in `TestCase::defineEnvironment()` so all Pro features are exercised
@@ -198,7 +200,7 @@ Ships as **Free + Pro**. **EU-first** by default (consent required, no IP/UA, mi
 - 4 widgets total (Source, Campaign, Form, Form→Source breakdown)
 - Date range presets (7/30/90) + filters
 - CSV export of aggregated tables
-- Retention tooling (prune command)
+- Retention tooling (prune command + scheduled pruning)
 - First-touch + last-touch attribution
 
 ## EU/GDPR Defaults (non-negotiable)
