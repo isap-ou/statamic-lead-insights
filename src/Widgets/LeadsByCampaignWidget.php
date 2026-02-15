@@ -35,6 +35,7 @@ class LeadsByCampaignWidget extends Widget
             'rows' => $rows,
             'total' => $submissions->count(),
             'days' => $settings->defaultDateRangeDays,
+            'exportType' => 'campaign',
         ]);
     }
 }

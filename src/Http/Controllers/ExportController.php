@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Isapp\LeadInsights\Support\Settings;
 use Isapp\LeadInsights\Support\SubmissionQuery;
-use Statamic\Facades\Addon;
 use Statamic\Http\Controllers\CP\CpController;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
@@ -38,7 +37,7 @@ class ExportController extends CpController
     {
         // Defense-in-depth: route is not registered for Free, but guard against direct URL access
         abort_unless(
-            Addon::get('isapp/statamic-lead-insights')->edition() === 'pro',
+            $this->settings->isPro,
             403,
             __('statamic-lead-insights::messages.edition.pro_required'),
         );

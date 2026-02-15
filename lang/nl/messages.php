@@ -54,6 +54,7 @@ return [
     'widgets.no_config' => 'Selecteer een formulier in de widgetinstellingen.',
     'widgets.last_n_days' => 'Laatste :days dagen',
     'widgets.no_data' => 'Geen gegevens beschikbaar voor deze periode.',
+    'widgets.export_csv' => 'CSV exporteren',
     'widgets.label' => 'Label',
     'widgets.leads' => 'Leads',
     'widgets.share' => 'Aandeel',

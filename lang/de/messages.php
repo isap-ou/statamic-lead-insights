@@ -54,6 +54,7 @@ return [
     'widgets.no_config' => 'Bitte wählen Sie ein Formular in den Widget-Einstellungen aus.',
     'widgets.last_n_days' => 'Letzte :days Tage',
     'widgets.no_data' => 'Keine Daten für diesen Zeitraum verfügbar.',
+    'widgets.export_csv' => 'CSV exportieren',
     'widgets.label' => 'Bezeichnung',
     'widgets.leads' => 'Leads',
     'widgets.share' => 'Anteil',
