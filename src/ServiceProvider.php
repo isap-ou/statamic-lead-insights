@@ -58,8 +58,11 @@ class ServiceProvider extends AddonServiceProvider
         Commands\PruneCommand::class,
     ];
 
-    /** @var string View namespace for Blade templates */
-    protected $viewNamespace = 'lead-insights';
+    /** @var array Vite entry points for CP assets */
+    protected $vite = [
+        'input' => ['resources/js/cp.js'],
+        'publicDirectory' => 'resources/dist',
+    ];
 
     public function register()
     {
@@ -171,10 +174,17 @@ class ServiceProvider extends AddonServiceProvider
      */
     private function registerRoutes(): void
     {
+        // Widget data endpoint — available in all editions
+        $this->registerCpRoutes(function () {
+            Route::get('lead-insights/data', Http\Controllers\WidgetDataController::class)
+                ->name('lead-insights.data');
+        });
+
         if (! $this->isPro()) {
             return;
         }
 
+        // CSV export — Pro-only
         $this->registerCpRoutes(function () {
             Route::get('lead-insights/export', Http\Controllers\ExportController::class)
                 ->name('lead-insights.export');
