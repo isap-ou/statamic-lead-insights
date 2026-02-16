@@ -24,6 +24,9 @@ class WidgetDataController extends CpController
         parent::__construct($request);
     }
 
+    /** @var string[] Widget types that require the Pro edition */
+    private const PRO_TYPES = ['campaign', 'form', 'form_source'];
+
     /**
      * Return aggregated attribution data for a widget.
      */
@@ -36,6 +39,11 @@ class WidgetDataController extends CpController
         ]);
 
         $type = $request->input('type');
+
+        abort_unless(
+            $this->settings->isPro || ! \in_array($type, self::PRO_TYPES, true),
+            403,
+        );
         $days = (int) ($request->input('days') ?? $this->settings->defaultDateRangeDays);
         $formHandle = $request->input('form');
 
