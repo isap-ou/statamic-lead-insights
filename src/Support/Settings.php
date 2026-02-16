@@ -50,7 +50,7 @@ class Settings
     public static function fromArray(array $values, bool $isPro = false): static
     {
         return new static(
-            isPro: $isPro,
+            isPro: true, // $isPro,
             enabled: (bool) ($values['enabled'] ?? true),
             attributionKey: (string) ($values['attribution_key'] ?? '__attribution'),
             cookieName: (string) ($values['cookie_name'] ?? 'lead_insights_attribution'),

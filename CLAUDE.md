@@ -19,7 +19,7 @@
 - Do NOT commit or push unless the user explicitly asks.
 - Do NOT push to `main` — ever. All work goes through feature branches.
 - Branch naming: `feature/<short-description>`, `fix/<short-description>`, `chore/<short-description>`.
-- Before committing: run `vendor/bin/pint` to fix code style. Stage the pint changes together with the feature changes.
+- Before committing: run `vendor/bin/pint` (PHP) and `npm run lint:fix && npm run format` (JS/Vue) to fix code style. Stage all style fixes together with the feature changes.
 - Commit messages follow **Conventional Commits**: `feat:`, `fix:`, `refactor:`, `test:`, `chore:`, `docs:`.
   - Keep the subject line under 72 characters.
   - Use imperative mood (`add`, `fix`, `remove` — not `added`, `fixed`, `removed`).
@@ -74,8 +74,19 @@ vendor/bin/phpunit tests/SomeTest.php
 # Run with filter
 vendor/bin/phpunit --filter=test_method_name
 
-# Code style (Laravel Pint)
+# Code style (Laravel Pint — PHP)
 vendor/bin/pint
+
+# Lint JS/Vue (ESLint)
+npm run lint
+npm run lint:fix
+
+# Format JS/Vue (Prettier)
+npm run format:check
+npm run format
+
+# Build frontend assets (only needed for releases)
+npm run build
 ```
 
 ## Project Structure
@@ -100,7 +111,11 @@ tests/
   TestCase.php                 # Base class (extends AddonTestCase)
 resources/
   blueprints/settings.yaml     # Settings blueprint (renders CP settings UI)
-  views/widgets/               # Blade/Vue widget views
+  js/
+    cp.js                      # Vite entry point — registers Vue components with Statamic
+    components/widgets/
+      LeadInsightsTable.vue    # Shared Vue widget component (all 4 widgets)
+  dist/                        # Built assets (gitignored, only in release tags)
 ```
 
 ## Addon Conventions (Statamic 6)
@@ -152,23 +167,39 @@ Run this procedure step by step, confirming before destructive/public actions:
 1. **Pre-checks**:
    - Ensure working tree is clean (`git status`)
    - Ensure all tests pass (`vendor/bin/phpunit`)
-   - Ensure code style is clean (`vendor/bin/pint --test`)
+   - Ensure PHP code style is clean (`vendor/bin/pint --test`)
+   - Ensure JS/Vue lint + format is clean (`npm run lint && npm run format:check`)
    - Verify `CHANGELOG.md` has an `(Unreleased)` section with entries
 2. **Update CHANGELOG.md**:
    - Replace `(Unreleased)` with the actual date: `## X.Y.Z (YYYY-MM-DD)`
    - Add a new empty section at the top: `## Unreleased`
-3. **Commit the changelog update**:
-   - `git add CHANGELOG.md && git commit -m "chore: prepare release X.Y.Z"`
-4. **Create git tag** (no `v` prefix):
+3. **Build frontend assets**:
+   - `npm ci && npm run build`
+   - Verify `resources/dist/build/` exists and contains the manifest + JS
+4. **Commit release (changelog + built assets)**:
+   - `git add CHANGELOG.md && git add -f resources/dist/build/ && git commit -m "chore: prepare release X.Y.Z"`
+   - (`git add -f` overrides `.gitignore` so built assets are included in the tagged commit)
+5. **Create git tag** (no `v` prefix):
    - `git tag X.Y.Z`
-5. **Push commit and tag** (ask user to confirm remote/branch):
+6. **Remove built assets from the working branch**:
+   - `git rm -r --cached resources/dist/build/ && rm -rf resources/dist/ && git commit -m "chore: remove build artifacts after X.Y.Z tag"`
+   - This keeps the branch clean — assets only live in the tagged commit
+7. **Push commits and tag** (ask user to confirm remote/branch):
    - `git push origin <branch> && git push origin X.Y.Z`
-6. **Create GitHub Release**:
+8. **Create GitHub Release**:
    - Extract release notes from CHANGELOG.md (the entries under `## X.Y.Z`)
    - `gh release create X.Y.Z --title "X.Y.Z" --notes "<release notes>"`
-7. **Verify**: `gh release view X.Y.Z`
+9. **Verify**: `gh release view X.Y.Z`
 
 If any step fails — stop and report. Do NOT skip steps or continue past failures.
+
+### Frontend Build (assets)
+
+- Built assets (`resources/dist/`) are **NOT** tracked in the repository (listed in `.gitignore`)
+- Assets are only built and force-committed during the release procedure (step 3–4)
+- After tagging, the build artifacts are removed from the branch (step 6)
+- This means: the tagged commit (which Composer/Marketplace pulls) contains the assets, but the working branch stays clean
+- To build locally during development: `npm install && npm run build` (or `npm run dev` for HMR)
 
 ## Translations (i18n)
 
