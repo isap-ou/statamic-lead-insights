@@ -4,6 +4,8 @@ All notable changes to Lead Insights will be documented in this file.
 
 ## Unreleased
 
+## 1.0.0 (2026-02-16)
+
 - [new] Capture UTM parameters, referrer, and landing URL on frontend requests
 - [new] Attach `__attribution` payload to Statamic form submissions
 - [new] Consent-first design: no tracking without visitor consent by default
